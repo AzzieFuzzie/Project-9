@@ -57,6 +57,7 @@ router.get(
     res.json({
       lastName: user.lastName,
       firstName: user.firstName,
+      emailaddress: user.emailAddress,
     });
   })
 );
