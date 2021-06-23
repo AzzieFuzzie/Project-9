@@ -25,8 +25,15 @@ asyncHandler = (cb) => {
 router.post(
   '/users',
   asyncHandler(async (req, res) => {
+    console.log(req.body);
     try {
-      await Users.create(req.body);
+      const user = await Users.create({
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        emailaddress: req.body.emailaddress,
+        password: req.body.password,
+      });
+      res.json(user);
       res.status(201).json({ message: 'Account successfully created!' });
     } catch (error) {
       if (
@@ -48,8 +55,8 @@ router.get(
   asyncHandler(async (req, res) => {
     const user = req.currentUser;
     res.json({
-      name: user.name,
-      username: user.username,
+      lastName: user.lastName,
+      firstName: user.firstName,
     });
   })
 );
