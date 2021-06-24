@@ -4,8 +4,8 @@
 const express = require('express');
 const morgan = require('morgan');
 const sequelize = require('./models').sequelize;
-const routes = require('./routes/users-routes');
-
+const usersRoutes = require('./routes/users-routes');
+const coursesRoutes = require('./routes/courses-routes');
 // variable to enable global error logging
 const enableGlobalErrorLogging =
   process.env.ENABLE_GLOBAL_ERROR_LOGGING === 'true';
@@ -25,7 +25,8 @@ app.use(morgan('dev'));
   }
 })();
 
-app.use('api', routes);
+app.use('/api/users', usersRoutes);
+app.use('/api/courses', coursesRoutes);
 
 // setup a friendly greeting for the root route
 app.get('/', (req, res) => {

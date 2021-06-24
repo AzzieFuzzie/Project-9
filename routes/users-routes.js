@@ -1,14 +1,8 @@
 const { authenticateUser } = require('../auth-user');
 const express = require('express');
-
 const router = express.Router();
 router.use(express.json());
 const { Users } = require('../models');
-
-// router.post('/create', async (req, res) => {
-//   const user = await Book.create(req.body);
-//   res.json(user);
-// });
 
 // Handler function to wrap each route.
 asyncHandler = (cb) => {
@@ -21,6 +15,14 @@ asyncHandler = (cb) => {
     }
   };
 };
+
+router.get(
+  '/users',
+  asyncHandler(async (req, res) => {
+    const user = Users.findAll();
+    res.json(user);
+  })
+);
 
 // Route that creates a new user.
 router.post(
@@ -44,18 +46,5 @@ router.post(
     }
   })
 );
-
-// router.get(
-//   '/users',
-
-//   asyncHandler(async (req, res) => {
-//     const user = req.currentUser;
-//     res.json({
-//       lastName: user.lastName,
-//       firstName: user.firstName,
-//       emailaddress: user.emailAddress,
-//     });
-//   })
-// );
 
 module.exports = router;

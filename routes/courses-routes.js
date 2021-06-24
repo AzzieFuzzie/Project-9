@@ -1,8 +1,16 @@
-// const express = require('express');
-// const router = express.Router();
+const express = require('express');
+const router = express.Router();
+router.use(express.json());
+const { Courses } = require('../models');
 
-// router.use(express.json());
-// const { Courses } = require('../models');
+router.post('/', async (req, res) => {
+  try {
+    const course = await Courses.create(req.body);
+    res.status(201).json({ message: 'Course created succesfully' });
+  } catch {
+    res.status(500);
+  }
+});
 
 // router.get('/api/courses', async (req, res) => {
 //   try {
@@ -16,22 +24,9 @@
 //     if (course) {
 //       res.json(course);
 //     } else {
-//       res.status(404).json({ message: 'Course was not found' });
+//       res.status(404).json({ message: 'Course was not found' }.end());
 //     }
 //   } catch (error) {
-//     res.status(500);
-//   }
-// });
-
-// router.post('/api/courses', async (req, res) => {
-//   try {
-//     if (req.body && req.body) {
-//       Users.create();
-//       res.status(201);
-//     } else {
-//       res.status(400).json({ message: '... required' });
-//     }
-//   } catch {
 //     res.status(500);
 //   }
 // });
@@ -46,3 +41,5 @@
 // router.delete('/api/courses', (req, res) => {
 //   Users.create();
 // });
+
+module.exports = router;
