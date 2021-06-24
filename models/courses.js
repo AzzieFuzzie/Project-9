@@ -13,14 +13,30 @@ module.exports = (sequelize, DataTypes) => {
   }
   Courses.init(
     {
-      title: DataTypes.STRING,
-      description: DataTypes.STRING,
-      estimatedTime: DataTypes.STRING,
-      materialsNeeded: DataTypes.STRING,
+      title: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: 'Please provide a valid title',
+          },
+        },
+      },
+      description: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: 'Please provide a valid description',
+          },
+        },
+      },
+      estimatedTime: { type: DataTypes.STRING },
+      materialsNeeded: { type: DataTypes.STRING },
     },
     {
       sequelize,
-      modelName: 'Courses',
+      modelNametype: 'Courses',
     }
   );
   Courses.associate = (models) => {

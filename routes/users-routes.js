@@ -1,5 +1,6 @@
 const { authenticateUser } = require('../auth-user');
 const express = require('express');
+
 const router = express.Router();
 router.use(express.json());
 const { Users } = require('../models');
@@ -27,13 +28,8 @@ router.post(
   asyncHandler(async (req, res) => {
     console.log(req.body);
     try {
-      const user = await Users.create({
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        emailaddress: req.body.emailaddress,
-        password: req.body.password,
-      });
-      res.json(user);
+      const user = await Users.create(req.body);
+
       res.status(201).json({ message: 'Account successfully created!' });
     } catch (error) {
       if (
@@ -49,17 +45,17 @@ router.post(
   })
 );
 
-router.get(
-  '/users',
-  authenticateUser,
-  asyncHandler(async (req, res) => {
-    const user = req.currentUser;
-    res.json({
-      lastName: user.lastName,
-      firstName: user.firstName,
-      emailaddress: user.emailAddress,
-    });
-  })
-);
+// router.get(
+//   '/users',
+
+//   asyncHandler(async (req, res) => {
+//     const user = req.currentUser;
+//     res.json({
+//       lastName: user.lastName,
+//       firstName: user.firstName,
+//       emailaddress: user.emailAddress,
+//     });
+//   })
+// );
 
 module.exports = router;

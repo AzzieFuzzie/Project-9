@@ -13,10 +13,53 @@ module.exports = (sequelize, DataTypes) => {
   }
   Users.init(
     {
-      firstName: DataTypes.STRING,
-      lastName: DataTypes.STRING,
-      emailaddress: DataTypes.STRING,
-      password: DataTypes.STRING,
+      firstName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: { msg: 'A first Name is required' },
+        },
+        notEmpty: {
+          msg: 'Please provide a valid first name',
+        },
+      },
+      lastName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: { msg: 'A first Name is required' },
+        },
+        notEmpty: {
+          msg: 'Please provide a valid last name',
+        },
+      },
+      emailaddress: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: {
+          msg: 'The email you entered already exist',
+        },
+        validate: {
+          notNull: { msg: 'A first Name is required' },
+        },
+        isEmail: {
+          msg: 'Please provide a valid email',
+        },
+      },
+      password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: { msg: 'A first Name is required password' },
+        },
+        notEmpty: {
+          msg: 'Please provide a',
+        },
+        len: {
+          args: [6 - 15],
+          msg: 'The password should be between 6-15 charcters in length',
+        },
+      },
     },
     {
       sequelize,

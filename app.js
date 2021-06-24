@@ -3,6 +3,8 @@
 // load modules
 const express = require('express');
 const morgan = require('morgan');
+const sequelize = require('./models').sequelize;
+const routes = require('./routes/users-routes');
 
 // variable to enable global error logging
 const enableGlobalErrorLogging =
@@ -14,8 +16,6 @@ const app = express();
 // setup morgan which gives us http request logging
 app.use(morgan('dev'));
 
-const sequelize = require('./models').sequelize;
-
 (async () => {
   try {
     await sequelize.authenticate();
@@ -25,8 +25,7 @@ const sequelize = require('./models').sequelize;
   }
 })();
 
-const routes = require('./routes/users_routes');
-app.use(routes);
+app.use('api', routes);
 
 // setup a friendly greeting for the root route
 app.get('/', (req, res) => {
