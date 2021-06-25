@@ -13,6 +13,11 @@ module.exports = (sequelize, DataTypes) => {
   }
   Courses.init(
     {
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+      },
       title: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -40,7 +45,12 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
   Courses.associate = (models) => {
-    Courses.belongsTo(models.Users);
+    Courses.belongsTo(models.Users, {
+      foreignKey: {
+        fieldName: 'Id',
+        allowNull: false,
+      },
+    });
   };
   return Courses;
 };

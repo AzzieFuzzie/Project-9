@@ -17,9 +17,10 @@ asyncHandler = (cb) => {
 };
 
 router.get(
-  '/users',
+  '/',
+  authenticateUser,
   asyncHandler(async (req, res) => {
-    const user = Users.findAll();
+    const user = await req.currentUser;
     res.json(user);
   })
 );

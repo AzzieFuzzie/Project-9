@@ -13,6 +13,11 @@ module.exports = (sequelize, DataTypes) => {
   }
   Users.init(
     {
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+      },
       firstName: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -67,7 +72,12 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
   Users.associate = (models) => {
-    Users.hasMany(models.Courses);
+    Users.hasMany(models.Courses, {
+      foreignKey: {
+        fieldName: 'id',
+        allowNull: false,
+      },
+    });
   };
   return Users;
 };
