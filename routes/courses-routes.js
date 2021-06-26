@@ -19,7 +19,7 @@ asyncHandler = (cb) => {
 // CREATES a new course.
 router.post(
   '/',
-  authenticateUser,
+  // authenticateUser,
   asyncHandler(async (req, res) => {
     const course = await Courses.create(req.body);
     res.status(201).json({ message: 'Course created succesfully' });
@@ -29,7 +29,6 @@ router.post(
 // READS/RETRIEVES all courses.
 router.get(
   '/',
-
   asyncHandler(async (req, res) => {
     const course = await Courses.findAll();
     res.json(course);

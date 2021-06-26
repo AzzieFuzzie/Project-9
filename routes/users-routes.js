@@ -17,7 +17,6 @@ asyncHandler = (cb) => {
 };
 
 // READS/RETRIEVES a user according to authentication.
-
 router.get(
   '/',
   authenticateUser,
