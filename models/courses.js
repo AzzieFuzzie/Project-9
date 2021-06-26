@@ -13,17 +13,12 @@ module.exports = (sequelize, DataTypes) => {
   }
   Courses.init(
     {
-      id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-      },
       title: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
           notNull: {
-            msg: 'Please provide a valid title',
+            msg: 'Please provide a valid "title"',
           },
         },
       },
@@ -32,12 +27,28 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           notNull: {
-            msg: 'Please provide a valid description',
+            msg: 'Please provide a valid "description"',
           },
         },
       },
-      estimatedTime: { type: DataTypes.STRING },
-      materialsNeeded: { type: DataTypes.STRING },
+      estimatedTime: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: 'Please provide a valid "estimated time"',
+          },
+        },
+      },
+      materialsNeeded: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: 'Please provide a valid "materialNeeded"',
+          },
+        },
+      },
     },
     {
       sequelize,
@@ -47,7 +58,7 @@ module.exports = (sequelize, DataTypes) => {
   Courses.associate = (models) => {
     Courses.belongsTo(models.Users, {
       foreignKey: {
-        fieldName: 'Id',
+        fieldName: 'userId',
         allowNull: false,
       },
     });

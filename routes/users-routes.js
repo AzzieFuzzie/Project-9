@@ -16,6 +16,8 @@ asyncHandler = (cb) => {
   };
 };
 
+// READS/RETRIEVES a user according to authentication.
+
 router.get(
   '/',
   authenticateUser,
@@ -25,9 +27,9 @@ router.get(
   })
 );
 
-// Route that creates a new user.
+// CREATES a new user.
 router.post(
-  '/users',
+  '/',
   asyncHandler(async (req, res) => {
     console.log(req.body);
     try {
