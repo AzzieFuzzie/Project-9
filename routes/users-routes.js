@@ -33,7 +33,7 @@ router.post(
     console.log(req.body);
     try {
       const user = await Users.create(req.body);
-
+      res.location('/');
       res.status(201).json({ message: 'Account successfully created!' });
     } catch (error) {
       if (
