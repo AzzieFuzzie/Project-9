@@ -68,23 +68,22 @@ router.put(
   '/:id',
   authenticateUser,
   asyncHandler(async (req, res) => {
-    const course = await Courses.findByPk(req.params.id);
-    if (!course) {
-      res.status(404).json({ message: 'Course was not found' });
-    } else {
-      try {
-        await Courses.update(course);
-        res.status(204).end();
-      } catch (error) {
-        if (
-          error.name === 'SequelizeValidationError' ||
-          error.name === 'SequelizeUniqueConstraintError'
-        ) {
-          const errors = error.errors.map((err) => err.message);
-          res.status(400).json({ errors });
-        } else {
-          throw error;
-        }
+    try {
+      const course = await Courses.findByPk(req.params.id);
+      if (!course) {
+        res.status(404).json({ message: 'Course was not found' });
+      }
+      await Courses.update(course);
+      res.status(204).end();
+    } catch (error) {
+      if (
+        error.name === 'SequelizeValidationError' ||
+        error.name === 'SequelizeUniqueConstraintError'
+      ) {
+        const errors = error.errors.map((err) => err.message);
+        res.status(400).json({ errors });
+      } else {
+        throw error;
       }
     }
   })
