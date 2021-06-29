@@ -46,7 +46,11 @@ router.get(
   '/',
   asyncHandler(async (req, res) => {
     const course = await Courses.findAll();
-    res.json(course);
+    if (course) {
+      res.json(course);
+    } else {
+      res.status(404).json({ message: 'Course was not found' });
+    }
   })
 );
 
@@ -58,7 +62,7 @@ router.get(
     if (course) {
       res.json(course);
     } else {
-      res.status(404).json({ message: 'Course was not found' }.end());
+      res.status(404).json({ message: 'Course was not found' });
     }
   })
 );
@@ -73,7 +77,12 @@ router.put(
       if (!course) {
         res.status(404).json({ message: 'Course was not found' });
       }
-      await Courses.update(course);
+      await course.update({
+        title: req.body.title,
+        description: req.body.description,
+        estimatedTime: req.body.estimatedTime,
+        materialsNeeded: req.body.materialsNeeded,
+      });
       res.status(204).end();
     } catch (error) {
       if (
@@ -99,7 +108,7 @@ router.delete(
       res.status(404).json({ message: 'Course was not found' });
     } else {
       await Courses.destroy({ where: { id: req.params.id } });
-      res.status(204).json({ message: 'Course successfully deleted' }).end();
+      res.status(204).end();
     }
   })
 );
