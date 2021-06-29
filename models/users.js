@@ -40,7 +40,7 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'Please provide a valid last name',
         },
       },
-      emailaddress: {
+      emailAddress: {
         type: DataTypes.STRING,
         allowNull: false,
         unique: {
