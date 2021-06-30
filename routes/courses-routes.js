@@ -74,16 +74,18 @@ router.put(
   asyncHandler(async (req, res) => {
     try {
       const course = await Courses.findByPk(req.params.id);
-      if (!course) {
+      if (course) {
+        await course.update({
+          userId: req.body.userId,
+          title: req.body.title,
+          description: req.body.description,
+          estimatedTime: req.body.estimatedTime,
+          materialsNeeded: req.body.materialsNeeded,
+        });
+        res.status(204).end();
+      } else {
         res.status(404).json({ message: 'Course was not found' });
       }
-      await course.update({
-        title: req.body.title,
-        description: req.body.description,
-        estimatedTime: req.body.estimatedTime,
-        materialsNeeded: req.body.materialsNeeded,
-      });
-      res.status(204).end();
     } catch (error) {
       if (
         error.name === 'SequelizeValidationError' ||
