@@ -3,6 +3,7 @@ const router = express.Router();
 const { authenticateUser } = require('../auth-user');
 router.use(express.json());
 const { Courses } = require('../models');
+const { Users } = require('../models');
 
 // Handler function to wrap each route.
 asyncHandler = (cb) => {
@@ -46,7 +47,11 @@ router.get(
   '/',
   asyncHandler(async (req, res) => {
     const course = await Courses.findAll({
-      where: { userId: req.currentUser },
+      include: [
+        {
+          model: Users,
+        },
+      ],
     });
     if (course) {
       res.json(course);
@@ -61,7 +66,14 @@ router.get(
   '/:id',
   asyncHandler(async (req, res) => {
     const course = await Courses.findAll({
-      where: { userId: req.currentUser },
+      where: {
+        userId: req.params.id,
+      },
+      include: [
+        {
+          model: Users,
+        },
+      ],
     });
     if (course) {
       res.json(course);
