@@ -67,7 +67,7 @@ router.get(
   asyncHandler(async (req, res) => {
     const course = await Courses.findAll({
       where: {
-        userId: req.params.id,
+        id: req.params.id,
       },
       include: [
         {
