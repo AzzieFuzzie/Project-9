@@ -45,7 +45,9 @@ router.post(
 router.get(
   '/',
   asyncHandler(async (req, res) => {
-    const course = await Courses.findAll();
+    const course = await Courses.findAll({
+      where: { userId: req.currentUser },
+    });
     if (course) {
       res.json(course);
     } else {
@@ -58,7 +60,9 @@ router.get(
 router.get(
   '/:id',
   asyncHandler(async (req, res) => {
-    const course = await Courses.findByPk(req.params.id);
+    const course = await Courses.findAll({
+      where: { userId: req.currentUser },
+    });
     if (course) {
       res.json(course);
     } else {
