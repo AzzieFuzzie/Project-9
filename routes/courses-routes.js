@@ -26,7 +26,7 @@ router.post(
     try {
       const course = await Courses.create(req.body);
       res.location(`/api/courses/${course.id}`);
-      res.status(201).json({ message: 'Course successfully created!' });
+      res.status(201).end();
     } catch (error) {
       if (
         error.name === 'SequelizeValidationError' ||
@@ -75,16 +75,10 @@ router.put(
     try {
       const course = await Courses.findByPk(req.params.id);
       if (course) {
-        await course.update({
-          userId: req.body.userId,
-          title: req.body.title,
-          description: req.body.description,
-          estimatedTime: req.body.estimatedTime,
-          materialsNeeded: req.body.materialsNeeded,
-        });
+        await course.update(req.body);
         res.status(204).end();
       } else {
-        res.status(404).json({ message: 'Course was not found' });
+        res.status(404).end();
       }
     } catch (error) {
       if (
@@ -106,11 +100,11 @@ router.delete(
   authenticateUser,
   asyncHandler(async (req, res) => {
     const course = await Courses.findByPk(req.params.id);
-    if (!course) {
-      res.status(404).json({ message: 'Course was not found' });
-    } else {
+    if (course) {
       await Courses.destroy({ where: { id: req.params.id } });
       res.status(204).end();
+    } else {
+      res.status(404).json({ message: 'Course was not found' });
     }
   })
 );

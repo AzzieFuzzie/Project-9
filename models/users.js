@@ -81,7 +81,6 @@ module.exports = (sequelize, DataTypes) => {
     Users.hasMany(models.Courses, {
       foreignKey: {
         fieldName: 'userId',
-        allowNull: false,
       },
     });
   };
