@@ -20,9 +20,9 @@ module.exports = (sequelize, DataTypes) => {
           notNull: {
             msg: "Please provide a valid 'title'",
           },
-        },
-        notEmpty: {
-          msg: "Please provide a valid 'title'",
+          notEmpty: {
+            msg: "Please provide a valid 'title'",
+          },
         },
       },
       description: {
@@ -32,9 +32,9 @@ module.exports = (sequelize, DataTypes) => {
           notNull: {
             msg: "Please provide a valid 'description'",
           },
-        },
-        notEmpty: {
-          msg: "Please a valid 'description'",
+          notEmpty: {
+            msg: "Please a valid 'description'",
+          },
         },
       },
       estimatedTime: {
