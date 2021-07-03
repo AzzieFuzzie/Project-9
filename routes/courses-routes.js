@@ -112,7 +112,7 @@ router.put(
 
 // DELETES a course with corresponding ID.
 router.delete(
-  '/delete/:id',
+  '/:id',
   authenticateUser,
   asyncHandler(async (req, res) => {
     const course = await Courses.findByPk(req.params.id);
